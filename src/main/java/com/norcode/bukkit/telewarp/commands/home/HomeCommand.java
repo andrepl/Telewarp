@@ -116,9 +116,9 @@ public class HomeCommand extends BaseCommand {
         Block b2 = getOtherBedBlock(block);
         for (BlockFace dir: bedsideCheckDirections) {
             if (isSafe(block.getRelative(dir))) {
-                return block.getRelative(dir).getLocation();
+                return block.getRelative(dir).getLocation().add(0.5, 0.1, 0.5);
             } else if (isSafe(b2.getRelative(dir))) {
-                return b2.getRelative(dir).getLocation();
+                return b2.getRelative(dir).getLocation().add(0.5, 0.1, 0.5);
             }
         }
         return null;
