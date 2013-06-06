@@ -1,7 +1,7 @@
 debug: true
 enable-warp-signs: true
 confusion-on-warmup: false
-database: false
+database: true
 default-home-limit: 1
 default-cooldown: 1800000
 
