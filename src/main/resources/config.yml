@@ -35,3 +35,6 @@ commands:
     back:
         warmup: 5000
         cost: 10
+    tp:
+        warmup: 0
+        cost: 0

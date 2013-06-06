@@ -85,6 +85,7 @@ public class Telewarp extends JavaPlugin {
         getServer().getPluginCommand("setwarp").setExecutor(new SetWarpCommand(this));
         getServer().getPluginCommand("delwarp").setExecutor(new DelWarpCommand(this));
         getServer().getPluginCommand("telewarp").setExecutor(new TelewarpCommand(this));
+        getServer().getPluginCommand("tp").setExecutor(new TPCommand(this));
 
         homesCommand = new HomesCommand(this);
         warpsCommand = new WarpsCommand(this);
@@ -133,10 +134,13 @@ public class Telewarp extends JavaPlugin {
         sec = getConfig().getConfigurationSection("group-cooldowns");
         HashMap<String, Integer> cdmap = new HashMap<String, Integer>();
         for (String key: sec.getKeys(false)) {
+            debug("Found group cooldown: " + key);
             cdmap.put(key, sec.getInt(key));
         }
         groupCooldownLimits = entriesSortedByValues(cdmap, false);
-
+        for (Map.Entry<String, Integer> cde: groupCooldownLimits) {
+             debug("Initializing group cooldown: " + cde.getKey() + "->" + cde.getValue());
+        }
     }
 
     private boolean enableVault() {
@@ -200,17 +204,24 @@ public class Telewarp extends JavaPlugin {
 
 
     public double getCost(Player player, String commandName) {
+        double cost = getConfig().getDouble("commands." + commandName.toLowerCase() + ".cost", getConfig().getDouble("defaults.cost"));
         if (player.hasPermission("telewarp.nocost." + commandName.toLowerCase())) {
             return 0;
+        } else if (player.hasPermission("telewarp.halfcost.*" + commandName.toLowerCase())) {
+            return cost/2.0D;
         }
-        return getConfig().getDouble("commands." + commandName.toLowerCase() + ".cost", getConfig().getDouble("defaults.cost"));
+        return cost;
     }
 
     public long getWarmup(Player player, String commandName) {
+        long warmup = getConfig().getLong("commands." + commandName.toLowerCase() + ".warmup", getConfig().getLong("defaults.warmup"));
         if (player.hasPermission("telewarp.nowarmup." + commandName.toLowerCase())) {
             return 0;
+        } else if (player.hasPermission("telewarp.halfwarmup." + commandName.toLowerCase())) {
+            return warmup/2;
         }
-        return getConfig().getLong("commands." + commandName.toLowerCase() + ".warmup", getConfig().getLong("defaults.warmup"));
+        return warmup;
+
     }
 
     public void setPlayerMeta(Player player, String metaKey, Object value) {
@@ -299,12 +310,17 @@ public class Telewarp extends JavaPlugin {
     }
 
     public long getPlayerCooldown(Player player) {
-
+        debug("Checking cooldown for player: " + player);
         for (Map.Entry<String, Integer> e: groupCooldownLimits) {
+            debug("... checking group: " + e.getKey());
             if (permission.playerInGroup(player, e.getKey())) {
+                debug("... Player IS in " + e.getKey() + ", assigning cooldown of " + e.getValue());
                 return e.getValue();
+            } else {
+                debug("... player is NOT a memeber of " + e.getKey());
             }
         }
+        debug(player.getName() + "didn't match any groups, assigning default cooldown.");
         return getConfig().getInt("default-cooldown", 1800000); // 30 mins
     }
 
@@ -313,9 +329,12 @@ public class Telewarp extends JavaPlugin {
         SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
                 new Comparator<Map.Entry<K,V>>() {
                     @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                        // never return equals or the group gets removed.
                         if (reverse) {
+                            if (e2.getValue() == e1.getValue()) return 1;
                             return e2.getValue().compareTo(e1.getValue());
                         } else {
+                            if (e2.getValue() == e1.getValue()) return 1;
                             return e1.getValue().compareTo(e2.getValue());
                         }
                     }

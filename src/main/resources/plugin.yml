@@ -35,7 +35,7 @@ commands:
     permission: telewarp.commands.warp
     usage: /<command> <warp>
   warps:
-    permission: telewarp.commands.warps
+    permission: telewarp.commands.warp
     usage: /<command> [<page>]
   back:
     permission: telewarp.commands.back
@@ -54,14 +54,68 @@ commands:
       - "/<command> resetcooldown <player>"
 
 permissions:
-  telewarp.commands.home.others:
-    default: op
   telewarp.admin:
+    default: op
+    children:
+      telewarp.commands.home.others: true
+      telewarp.commands.tp: true
+      telewarp.commands.tpa: true
+      telewarp.commands.home: true
+      telewarp.commands.warp: true
+      telewarp.commands.back: true
+      telewarp.commands.back.ondeath: true
+      telewarp.commands.smoke: true
+      telewarp.signs.create: true
+      telewarp.signs.use: true
+      telewarp.nocost.*
+      telewarp.nowarmup.*
+      
+  telewarp.nowarmup.*:
+    default: op
+    children: 
+      telewarp.nowarmup.warp: true
+      telewarp.nowarmup.home: true
+      telewarp.nowarmup.tpa: true
+      telewarp.nowarmup.back: true
+      telewarp.nowarmup.tp: true
+  
+  telewarp.nocost.*:
+      default: op
+      children: 
+        telewarp.nocost.warp: true
+        telewarp.nocost.home: true
+        telewarp.nocost.tpa: true
+        telewarp.nocost.back: true
+        telewarp.nocost.tp: true
+  
+  telewarp.halfwarmup.*:
+      default: false
+      children: 
+        telewarp.halfwarmup.warp: true
+        telewarp.halfwarmup.home: true
+        telewarp.halfwarmup.tpa: true
+        telewarp.halfwarmup.back: true
+        telewarp.halfwarmup.tp: true
+    
+    telewarp.halfcost.*:
+        default: false
+        children: 
+          telewarp.halfcost.warp: true
+          telewarp.halfcost.home: true
+          telewarp.halfcost.tpa: true
+          telewarp.halfcost.back: true
+          telewarp.halfcost.tp: true
+    
+    
+        
+  telewarp.commands.home.others:
     default: op
   telewarp.signs.create:
     default: op
   telewarp.signs.use:
     default: true
+  telewarp.commands.tp:
+    default: op
   telewarp.commands.tpa:
     default: true
   telewarp.commands.tpahere:
@@ -69,8 +123,6 @@ permissions:
   telewarp.commands.home:
     default: true
   telewarp.commands.warp:
-    default: true
-  telewarp.commands.warps:
     default: true
   telewarp.commands.back:
     default: op
@@ -88,6 +140,35 @@ permissions:
     default: op
   telewarp.nowarmup.warp:
     default: op
+  telewarp.nocost.tpa:
+    default: op
+  telewarp.nowarmup.tpa:
+    default: op
+  telewarp.nocost.tp:
+    default: op
+  telewarp.nowarmup.tp:
+    default: op
+  telewarp.halfcost.home:
+    default: false
+  telewarp.halfwarmup.home:
+    default: false
+  telewarp.halfcost.back:
+    default: false
+  telewarp.halfwarmup.back:
+    default: false
+  telewarp.halfcost.warp:
+    default: false
+  telewarp.halfwarmup.warp:
+    default: false
+  telewarp.halfcost.tpa:
+    default: false
+  telewarp.halfwarmup.tpa:
+    default: false
+  telewarp.halfcost.tp:
+    default: false
+  telewarp.halfwarmup.tp:
+    default: false
+    
   telewarp.confusionimmunity:
     default: false
   telewarp.smoke:

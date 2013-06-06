@@ -39,3 +39,4 @@ gp-claim-required: '&4Sorry, you need to claim this land before you can set a ho
 gp-trust-required: '&4Sorry, you need to have at least ContainerTrust to set a home here.'
 player-cooldown-reset: "&f{0}&a''s cooldown has been reset."
 your-cooldown-reset: "&ayour cooldown has been reset by &f{0}&a."
+3rd-party-tp-initiated: '&aTeleport Initiated.'
