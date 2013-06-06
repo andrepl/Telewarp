@@ -44,6 +44,8 @@ public class TPAYesCommand extends BaseCommand {
                 return true;
             }
         }
+        playerToMove = plugin.getServer().getPlayer(req.getPlayerToMove());
+        destinationPlayer = plugin.getServer().getPlayer(req.getDestinationPlayer());
         Player requester = plugin.getServer().getPlayer(req.getRequestedBy());
         requester.sendMessage(plugin.getMsg("tpa-request-accepted", sender.getName()));
         plugin.setPlayerMeta(playerToMove, MetaKeys.TELEPORT_TYPE, getName());
