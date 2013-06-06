@@ -33,7 +33,18 @@ public class SetHomeCommand extends BaseCommand {
 
         if (plugin.isGriefPreventionSupportEnabled()) {
             Claim claim = GriefPrevention.instance.dataStore.getClaimAt(bedBlock.getLocation(), false, null);
-            if (claim == null)   {}
+            if (claim == null)   {
+                if (plugin.getConfig().getBoolean("grief-prevention.require-claim", true)) {
+                    sender.sendMessage("gp-claim-required");
+                    return true;
+                }
+            } else if (plugin.getConfig().getBoolean("grief-prevention.require-trust", true)) {
+                String err = claim.allowContainers(player);
+                if (err != null) {
+                    sender.sendMessage(err);
+                    return true;
+                }
+            }
         }
 
         String homeName = null;
