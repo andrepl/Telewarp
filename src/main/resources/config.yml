@@ -1,0 +1,37 @@
+debug: true
+enable-warp-signs: true
+confusion-on-warmup: false
+database: false
+default-home-limit: 1
+default-cooldown: 1800000
+
+grief-prevention:
+  enabled: true
+  require-claim: true
+
+group-cooldowns:
+  admin: 0
+
+multiple-home-limits:
+    admin: 10
+
+defaults:
+    warmup: 5000
+    cost: 10
+
+commands:
+    home:
+        warmup: 5000
+        cost: 10
+    spawn:
+        warmup: 5000
+        cost: 10
+    tpa:
+        warmup: 5000
+        cost: 10
+    tpahere:
+        warmup: 5000
+        cost: 10
+    back:
+        warmup: 5000
+        cost: 10

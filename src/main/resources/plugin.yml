@@ -1,0 +1,91 @@
+author: ${project.authors}
+name: ${project.name}
+version: ${project.version}
+softdepend: ${project.softdepends}
+main: ${project.main}
+database: true
+
+commands:
+  sethome:
+    usage: /<command> [<name>]
+    permission: telewarp.commands.home
+  delhome:
+    usage: /<delhome> [<name>]
+    permission: telewarp.commands.home
+  tpa:
+    permission: telewarp.commands.tpa
+    usage: /<command> <player>
+  tpahere:
+    permission: telewarp.commands.tpahere
+    usage: /<command> <player>
+  tpayes:
+    permission: telewarp.commands.tpa
+    usage: /<command>
+  tpano:
+    permission: telewarp.commands.tpa
+    usage: /<command>
+  homes:
+    permission: telewarp.commands.home
+    usage: /<command>
+  home:
+    aliases: [h]
+    permission: telewarp.commands.home
+    usage: /<command>
+  warp:
+    permission: telewarp.commands.warp
+    usage: /<command> <warp>
+  warps:
+    permission: telewarp.commands.warps
+    usage: /<command> [<page>]
+  back:
+    permission: telewarp.commands.back
+    usage: /<command>
+  delwarp:
+    permission: telewarp.admin
+    usage: /<command> <warp>
+  setwarp:
+    permission: telewarp.admin
+    usage: /<command> <warp> [<cost>] [<description...>]
+  telewarp:
+    permission: telewarp.admin
+    usage: /<command> [reload|save]
+
+permissions:
+  telewarp.commands.home.others:
+    default: op
+  telewarp.admin:
+    default: op
+  telewarp.signs.create:
+    default: op
+  telewarp.signs.use:
+    default: true
+  telewarp.commands.tpa:
+    default: true
+  telewarp.commands.tpahere:
+    default: true
+  telewarp.commands.home:
+    default: true
+  telewarp.commands.warp:
+    default: true
+  telewarp.commands.warps:
+    default: true
+  telewarp.commands.back:
+    default: op
+  telewarp.commands.back.ondeath:
+    default: op
+  telewarp.nocost.home:
+    default: op
+  telewarp.nowarmup.home:
+    default: op
+  telewarp.nocost.back:
+    default: op
+  telewarp.nowarmup.back:
+    default: op
+  telewarp.nocost.warp:
+    default: op
+  telewarp.nowarmup.warp:
+    default: op
+  telewarp.confusionimmunity:
+    default: false
+  telewarp.smoke:
+    default: op
