@@ -67,8 +67,8 @@ permissions:
       telewarp.commands.smoke: true
       telewarp.signs.create: true
       telewarp.signs.use: true
-      telewarp.nocost.*
-      telewarp.nowarmup.*
+      telewarp.nocost.*: true
+      telewarp.nowarmup.*: true
       
   telewarp.nowarmup.*:
     default: op
