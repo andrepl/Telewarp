@@ -6,6 +6,9 @@ main: ${project.main}
 database: true
 
 commands:
+  tp:
+    usage: /<command> [<playerToMove>] [<destinationPlayer>|<destinationCoords>]
+    permission: telewarp.commands.tp
   sethome:
     usage: /<command> [<name>]
     permission: telewarp.commands.home
@@ -80,31 +83,31 @@ permissions:
       telewarp.nowarmup.tp: true
   
   telewarp.nocost.*:
-      default: op
-      children: 
-        telewarp.nocost.warp: true
-        telewarp.nocost.home: true
-        telewarp.nocost.tpa: true
-        telewarp.nocost.back: true
-        telewarp.nocost.tp: true
+    default: op
+    children:
+      telewarp.nocost.warp: true
+      telewarp.nocost.home: true
+      telewarp.nocost.tpa: true
+      telewarp.nocost.back: true
+      telewarp.nocost.tp: true
   
   telewarp.halfwarmup.*:
-      default: false
-      children: 
-        telewarp.halfwarmup.warp: true
-        telewarp.halfwarmup.home: true
-        telewarp.halfwarmup.tpa: true
-        telewarp.halfwarmup.back: true
-        telewarp.halfwarmup.tp: true
+    default: false
+    children:
+      telewarp.halfwarmup.warp: true
+      telewarp.halfwarmup.home: true
+      telewarp.halfwarmup.tpa: true
+      telewarp.halfwarmup.back: true
+      telewarp.halfwarmup.tp: true
     
-    telewarp.halfcost.*:
-        default: false
-        children: 
-          telewarp.halfcost.warp: true
-          telewarp.halfcost.home: true
-          telewarp.halfcost.tpa: true
-          telewarp.halfcost.back: true
-          telewarp.halfcost.tp: true
+  telewarp.halfcost.*:
+    default: false
+    children:
+      telewarp.halfcost.warp: true
+      telewarp.halfcost.home: true
+      telewarp.halfcost.tpa: true
+      telewarp.halfcost.back: true
+      telewarp.halfcost.tp: true
     
     
         
