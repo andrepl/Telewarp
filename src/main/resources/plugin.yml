@@ -48,7 +48,9 @@ commands:
     usage: /<command> <warp> [<cost>] [<description...>]
   telewarp:
     permission: telewarp.admin
-    usage: /<command> [reload|save]
+    usage:
+      - "/<command> [reload|save]"
+      - "/<command> resetcooldown <player>"
 
 permissions:
   telewarp.commands.home.others:

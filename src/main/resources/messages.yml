@@ -37,3 +37,5 @@ warp-signs-disabled: '&4Warp signs have been disabled.'
 active-cooldown: '&6Sorry, you need to wait &f{0}&6 until you can teleport again.'
 gp-claim-required: '&4Sorry, you need to claim this land before you can set a home here.'
 gp-trust-required: '&4Sorry, you need to have at least ContainerTrust to set a home here.'
+player-cooldown-reset: "&f{0}&a''s cooldown has been reset."
+your-cooldown-reset: "&ayour cooldown has been reset by &f{0}&a."

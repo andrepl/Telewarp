@@ -133,7 +133,7 @@ public class PlayerListener implements Listener {
             long expiry = plugin.getCooldowns().get(player.getName());
             long now = System.currentTimeMillis();
             plugin.debug("Now: " + now + ", Cooldown Expiry: " + expiry);
-            if (expiry < System.currentTimeMillis()) {
+            if (expiry > System.currentTimeMillis()) {
                 player.sendMessage(plugin.getMsg("active-cooldown", formatDuration(expiry-now)));
                 return;
             } else {
