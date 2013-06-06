@@ -47,6 +47,7 @@ commands:
     permission: telewarp.admin
     usage: /<command> <warp> [<cost>] [<description...>]
   telewarp:
+    aliases: [tw]
     permission: telewarp.admin
     usage:
       - "/<command> [reload|save]"
