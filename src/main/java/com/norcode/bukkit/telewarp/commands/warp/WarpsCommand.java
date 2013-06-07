@@ -39,10 +39,10 @@ public class WarpsCommand extends BaseCommand {
             return true;
         }
         ArrayList<String> lines = new ArrayList<String>();
-        lines.add(plugin.getMsg("available-warp", page, maxPage));
+        lines.add(plugin.getMsg("available-warps", page, maxPage));
         for (int i=start;i<start+perPage&&i<warps.size();i++) {
             Warp w = warps.get(i);
-            lines.add(plugin.getMsg("available-warp-line", w.getName(), w.getCost(), w.getDescription()));
+            lines.add(plugin.getMsg("available-warp-line", w.getName(), w.getCost(), w.getDescription() == null ? "" : w.getDescription()));
         }
         sender.sendMessage(lines.toArray(new String[lines.size()]));
         return true;
