@@ -134,13 +134,10 @@ public class Telewarp extends JavaPlugin {
         sec = getConfig().getConfigurationSection("group-cooldowns");
         HashMap<String, Integer> cdmap = new HashMap<String, Integer>();
         for (String key: sec.getKeys(false)) {
-            debug("Found group cooldown: " + key);
             cdmap.put(key, sec.getInt(key));
         }
         groupCooldownLimits = entriesSortedByValues(cdmap, false);
-        for (Map.Entry<String, Integer> cde: groupCooldownLimits) {
-             debug("Initializing group cooldown: " + cde.getKey() + "->" + cde.getValue());
-        }
+
     }
 
     private boolean enableVault() {
@@ -310,17 +307,11 @@ public class Telewarp extends JavaPlugin {
     }
 
     public long getPlayerCooldown(Player player) {
-        debug("Checking cooldown for player: " + player);
         for (Map.Entry<String, Integer> e: groupCooldownLimits) {
-            debug("... checking group: " + e.getKey());
             if (permission.playerInGroup(player, e.getKey())) {
-                debug("... Player IS in " + e.getKey() + ", assigning cooldown of " + e.getValue());
                 return e.getValue();
-            } else {
-                debug("... player is NOT a memeber of " + e.getKey());
             }
         }
-        debug(player.getName() + "didn't match any groups, assigning default cooldown.");
         return getConfig().getInt("default-cooldown", 1800000); // 30 mins
     }
 
