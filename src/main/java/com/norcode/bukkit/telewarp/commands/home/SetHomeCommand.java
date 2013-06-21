@@ -3,8 +3,6 @@ package com.norcode.bukkit.telewarp.commands.home;
 import com.norcode.bukkit.telewarp.Telewarp;
 import com.norcode.bukkit.telewarp.commands.BaseCommand;
 import com.norcode.bukkit.telewarp.persistence.home.Home;
-import me.ryanhamshire.GriefPrevention.Claim;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -32,7 +30,7 @@ public class SetHomeCommand extends BaseCommand {
         }
 
         if (plugin.isGriefPreventionSupportEnabled()) {
-            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(bedBlock.getLocation(), false, null);
+            me.ryanhamshire.GriefPrevention.data.Claim claim = plugin.getGP().getDataStore().getClaimAt(bedBlock.getLocation(), false, null);
             if (claim == null)   {
                 if (plugin.getConfig().getBoolean("grief-prevention.require-claim", true)) {
                     sender.sendMessage("gp-claim-required");

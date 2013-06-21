@@ -45,7 +45,7 @@ public class PlayerListener implements Listener {
                     Warp warp = plugin.getWarpManager().getWarp(sign.getLine(1));
                     if (warp != null) {
                         plugin.setPlayerMeta(event.getPlayer(), MetaKeys.DESTINATION_WARP, warp.getName().toLowerCase());
-                        event.getPlayer().teleport(warp.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                        event.getPlayer().teleport(warp.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
                     } else {
                         event.getPlayer().sendMessage(plugin.getMsg("unknown-warp", warp.getName()));
                     }
@@ -107,7 +107,6 @@ public class PlayerListener implements Listener {
 
         // Only handle plugin and command causes, otherwise just save the previous location for /back
         switch (event.getCause()) {
-            case PLUGIN:
             case COMMAND:
                 break;
             default:

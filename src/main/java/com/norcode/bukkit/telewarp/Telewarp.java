@@ -343,4 +343,7 @@ public class Telewarp extends JavaPlugin {
         return cooldowns;
     }
 
+    public GriefPrevention getGP() {
+        return ((GriefPrevention) getServer().getPluginManager().getPlugin("GriefPreventionTNG"));
+    }
 }
