@@ -74,6 +74,7 @@ public class PlayerListener implements Listener {
         Player player = (Player) event.getEntity();
         Location deathLoc = player.getLocation();
         if (player.hasPermission("telewarp.commands.back.ondeath")) {
+            plugin.debug("Setting /back location to " + plugin.serializeLocation(deathLoc));
             plugin.setPlayerMeta(player, MetaKeys.PREVIOUS_LOCATION, plugin.serializeLocation(deathLoc));
         }
     }
@@ -101,6 +102,7 @@ public class PlayerListener implements Listener {
         if (player.hasMetadata(MetaKeys.ACTIVE_TELEPORT)) {
             plugin.getCooldowns().put(player.getName(), System.currentTimeMillis() + plugin.getPlayerCooldown(player));
             player.removeMetadata(MetaKeys.ACTIVE_TELEPORT, plugin);
+            plugin.debug("Setting /back location to " + plugin.serializeLocation(event.getFrom()));
             player.setMetadata(MetaKeys.PREVIOUS_LOCATION, new FixedMetadataValue(plugin, plugin.serializeLocation(event.getFrom())));
             return;
         }
@@ -111,6 +113,7 @@ public class PlayerListener implements Listener {
                 break;
             default:
                 if (event.getFrom() != null) {
+                    plugin.debug("Setting /back location to " + plugin.serializeLocation(event.getFrom()));
                     player.setMetadata(MetaKeys.PREVIOUS_LOCATION, new FixedMetadataValue(plugin, plugin.serializeLocation(event.getFrom())));
                 }
                 return;
