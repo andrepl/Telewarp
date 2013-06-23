@@ -107,16 +107,9 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        // Only handle plugin and command causes, otherwise just save the previous location for /back
-        switch (event.getCause()) {
-            case COMMAND:
-                break;
-            default:
-                if (event.getFrom() != null) {
-                    plugin.debug("Setting /back location to " + plugin.serializeLocation(event.getFrom()));
-                    player.setMetadata(MetaKeys.PREVIOUS_LOCATION, new FixedMetadataValue(plugin, plugin.serializeLocation(event.getFrom())));
-                }
-                return;
+        // Only handle plugin and command causes
+        if (!event.getCause().equals(PlayerTeleportEvent.TeleportCause.COMMAND)) {
+            return;
         }
 
         // cancel the one in progress if they request a new one.
