@@ -30,7 +30,7 @@ public class SetHomeCommand extends BaseCommand {
         }
 
         if (plugin.isGriefPreventionSupportEnabled()) {
-            me.ryanhamshire.GriefPrevention.data.Claim claim = plugin.getGP().getDataStore().getClaimAt(bedBlock.getLocation(), false, null);
+            com.norcode.bukkit.griefprevention.data.Claim claim = plugin.getGP().getDataStore().getClaimAt(bedBlock.getLocation(), false, null);
             if (claim == null)   {
                 if (plugin.getConfig().getBoolean("grief-prevention.require-claim", true)) {
                     sender.sendMessage("gp-claim-required");

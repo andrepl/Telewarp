@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class BaseCommand implements TabExecutor {
+public abstract class   BaseCommand implements TabExecutor {
     protected boolean allowConsole = false;
     protected int minArgs = 0;
     protected Telewarp plugin;

@@ -1,11 +1,13 @@
 package com.norcode.bukkit.telewarp;
 
+import com.norcode.bukkit.griefprevention.GriefPreventionTNG;
 import com.norcode.bukkit.telewarp.commands.*;
 import com.norcode.bukkit.telewarp.commands.home.DelHomeCommand;
 import com.norcode.bukkit.telewarp.commands.home.HomeCommand;
 import com.norcode.bukkit.telewarp.commands.home.HomesCommand;
 import com.norcode.bukkit.telewarp.commands.home.SetHomeCommand;
 import com.norcode.bukkit.telewarp.commands.tpa.TPACommand;
+import com.norcode.bukkit.telewarp.commands.tpa.TPAHereCommand;
 import com.norcode.bukkit.telewarp.commands.tpa.TPANoCommand;
 import com.norcode.bukkit.telewarp.commands.tpa.TPAYesCommand;
 import com.norcode.bukkit.telewarp.commands.warp.DelWarpCommand;
@@ -18,7 +20,6 @@ import com.norcode.bukkit.telewarp.persistence.warp.BaseWarpManager;
 import com.norcode.bukkit.telewarp.persistence.warp.SQLWarpManager;
 import com.norcode.bukkit.telewarp.persistence.warp.Warp;
 import com.norcode.bukkit.telewarp.persistence.warp.YamlWarpManager;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
@@ -39,7 +40,7 @@ public class Telewarp extends JavaPlugin {
     private Pattern validNamePattern = Pattern.compile("^[\\w\\d-]+$");
     public Permission permission = null;
     public Economy economy = null;
-    GriefPrevention griefPrevention = null;
+    GriefPreventionTNG griefPrevention = null;
     private BaseWarpManager warpManager;
     private BaseHomeManager homeManager;
     private ConfigAccessor messages;
@@ -78,6 +79,7 @@ public class Telewarp extends JavaPlugin {
         getServer().getPluginCommand("sethome").setExecutor(new SetHomeCommand(this));
         getServer().getPluginCommand("delhome").setExecutor(new DelHomeCommand(this));
         getServer().getPluginCommand("tpa").setExecutor(new TPACommand(this));
+        getServer().getPluginCommand("tpahere").setExecutor(new TPAHereCommand(this));
         getServer().getPluginCommand("tpayes").setExecutor(new TPAYesCommand(this));
         getServer().getPluginCommand("tpano").setExecutor(new TPANoCommand(this));
         getServer().getPluginCommand("back").setExecutor(new BackCommand(this));
@@ -93,7 +95,7 @@ public class Telewarp extends JavaPlugin {
         getServer().getPluginCommand("homes").setExecutor(homesCommand);
         Plugin gp = getServer().getPluginManager().getPlugin("GriefPrevention");
         if (gp != null) {
-            griefPrevention = (GriefPrevention)gp;
+            griefPrevention = (GriefPreventionTNG)gp;
         }
     }
 
@@ -343,7 +345,7 @@ public class Telewarp extends JavaPlugin {
         return cooldowns;
     }
 
-    public GriefPrevention getGP() {
-        return ((GriefPrevention) getServer().getPluginManager().getPlugin("GriefPreventionTNG"));
+    public GriefPreventionTNG getGP() {
+        return ((GriefPreventionTNG) getServer().getPluginManager().getPlugin("GriefPreventionTNG"));
     }
 }

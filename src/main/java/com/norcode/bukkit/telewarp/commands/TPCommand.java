@@ -12,13 +12,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: andre
- * Date: 6/6/13
- * Time: 3:31 PM
- * To change this template use File | Settings | File Templates.
- */
 public class TPCommand extends BaseCommand {
 
 
