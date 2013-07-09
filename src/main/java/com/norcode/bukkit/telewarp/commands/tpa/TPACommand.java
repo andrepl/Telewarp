@@ -39,6 +39,6 @@ public class TPACommand extends BaseCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, LinkedList<String> args) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 }

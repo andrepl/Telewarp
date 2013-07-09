@@ -6,7 +6,7 @@
 
     <groupId>com.norcode.bukkit.telewarp</groupId>
     <artifactId>Telewarp</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.3-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,7 +59,7 @@
             <groupId>com.norcode.bukkit.griefprevention</groupId>
             <artifactId>GriefPreventionTNG</artifactId>
             <scope>provided</scope>
-            <version>0.92.4-SNAPSHOT</version>
+            <version>0.93.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
