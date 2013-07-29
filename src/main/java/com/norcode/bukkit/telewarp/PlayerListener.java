@@ -18,6 +18,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.lang.IllegalArgumentException;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerListener implements Listener {
@@ -49,8 +50,35 @@ public class PlayerListener implements Listener {
                     } else {
                         event.getPlayer().sendMessage(plugin.getMsg("unknown-warp", warp.getName()));
                     }
+                }  else if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_BLUE + "[telewarp]")) {
+                    if (sign.getLine(1).equalsIgnoreCase("reset") && sign.getLine(2).equalsIgnoreCase("cooldown")) {
+                        event.setCancelled(true);
+                        double cost = parseCost(sign.getLine(3));
+                        if (cost > 0) {
+                           if (!plugin.economy.withdrawPlayer(event.getPlayer().getName(), cost).transactionSuccess()) {
+                               event.getPlayer().sendMessage(plugin.getMsg("insufficient-funds", cost));
+                               return;
+                           }
+                        }
+                        plugin.getCooldowns().remove(event.getPlayer().getName());
+                        event.getPlayer().sendMessage(plugin.getMsg("your-cooldown-reset", event.getPlayer().getName()));
+                    }
                 }
             }
+        }
+    }
+
+    public double parseCost(String s) {
+        if (s.startsWith("$")) {
+            s = s.substring(1);
+        }
+        if (s.startsWith("-")) {
+            s = s.substring(1);
+        }
+        try {
+            return Double.parseDouble(s);
+        } catch (IllegalArgumentException ex) {
+            return 0;
         }
     }
 
@@ -65,6 +93,29 @@ public class PlayerListener implements Listener {
                 }
                 event.setLine(0, ChatColor.DARK_BLUE + event.getLine(0));
                 event.getPlayer().sendMessage(plugin.getMsg("warp-sign-created", warp.getName()));
+            }  else if (event.getLine(0).equalsIgnoreCase("[TeleWarp]")) {
+                if (event.getLine(1).equalsIgnoreCase("reset")) {
+                    if (event.getLine(2).equalsIgnoreCase("cooldown")) {
+                        String cost = event.getLine(3);
+                        if (cost.startsWith("$")) {
+                            cost = cost.substring(1);
+                        }
+                        if (cost.startsWith("-")) {
+                            cost = cost.substring(1);
+                        }
+                        double dcost = 0;
+                        if (cost.length() >= 1) {
+                            try {
+                                dcost = Double.parseDouble(cost);
+
+                            } catch (IllegalArgumentException ex) {
+                                event.getPlayer().sendMessage(plugin.getMsg("Invalid cost"));
+                            }
+                        }
+                        event.setLine(0, ChatColor.DARK_BLUE + event.getLine(0));
+                        event.getPlayer().sendMessage(plugin.getMsg("reset-cooldown-sign-created", dcost));
+                    }
+                }
             }
         }
     }
