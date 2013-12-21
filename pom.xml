@@ -6,14 +6,14 @@
 
     <groupId>com.norcode.bukkit.telewarp</groupId>
     <artifactId>Telewarp</artifactId>
-    <version>0.1.3-SNAPSHOT</version>
+    <version>0.1.4-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.authors>metalhedd, ulchm</project.authors>
+        <project.authors>metalhedd</project.authors>
         <project.main>com.norcode.bukkit.telewarp.Telewarp</project.main>
-        <project.softdepends>[Vault,]</project.softdepends>
-        <project.description>Advanced warping, homes and teleportation.</project.description>
+        <project.softdepends>Vault</project.softdepends>
+        <project.description>Advanced warping homes and teleportation</project.description>
     </properties>
     <build>
         <resources>
@@ -48,18 +48,17 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.2-R0.1-SNAPSHOT</version>
+            <version>1.7.2-R0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.7.2-R0.1-SNAPSHOT</version>
+            <version>1.7.2-R0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
             <version>1.2.27-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 </project>
