@@ -10,9 +10,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.authors>metalhedd</project.authors>
+        <project.authors>[metalhedd,ulchm]</project.authors>
         <project.main>com.norcode.bukkit.telewarp.Telewarp</project.main>
-        <project.softdepends>Vault</project.softdepends>
+        <project.softdepends>[Vault]</project.softdepends>
         <project.description>Advanced warping homes and teleportation</project.description>
     </properties>
     <build>

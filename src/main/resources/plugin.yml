@@ -1,4 +1,4 @@
-author: ${project.authors}
+authors: ${project.authors}
 name: ${project.name}
 version: ${project.version}
 softdepend: ${project.softdepends}
