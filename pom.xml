@@ -10,10 +10,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.authors>metalhedd</project.authors>
+        <project.authors>metalhedd, ulchm</project.authors>
         <project.main>com.norcode.bukkit.telewarp.Telewarp</project.main>
-        <project.softdepends>[Vault, GriefPrevention]</project.softdepends>
-        <project.description>It lets you construct a house from a enderchest out of thin air!</project.description>
+        <project.softdepends>[Vault,]</project.softdepends>
+        <project.description>Advanced warping, homes and teleportation.</project.description>
     </properties>
     <build>
         <resources>
@@ -36,8 +36,8 @@
     </build>
     <repositories>
         <repository>
-            <id>bukkit-releases-repo</id>
-            <url>http://repo.bukkit.org/content/repositories/releases/</url>
+            <id>bukkit-release-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>vault-repo</id>
@@ -48,18 +48,17 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.2-R0.1</version>
+            <version>1.7.2-R0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.7.2-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.26-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.norcode.bukkit.griefprevention</groupId>
-            <artifactId>GriefPreventionTNG</artifactId>
-            <scope>provided</scope>
-            <version>0.93.0-SNAPSHOT</version>
+            <version>1.2.27-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
