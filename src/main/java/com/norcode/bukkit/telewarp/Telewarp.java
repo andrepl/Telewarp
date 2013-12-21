@@ -1,6 +1,5 @@
 package com.norcode.bukkit.telewarp;
 
-import com.norcode.bukkit.griefprevention.GriefPreventionTNG;
 import com.norcode.bukkit.telewarp.commands.*;
 import com.norcode.bukkit.telewarp.commands.home.DelHomeCommand;
 import com.norcode.bukkit.telewarp.commands.home.HomeCommand;
@@ -40,7 +39,6 @@ public class Telewarp extends JavaPlugin {
     private Pattern validNamePattern = Pattern.compile("^[\\w\\d-]+$");
     public Permission permission = null;
     public Economy economy = null;
-    GriefPreventionTNG griefPrevention = null;
     private BaseWarpManager warpManager;
     private BaseHomeManager homeManager;
     private ConfigAccessor messages;
@@ -93,15 +91,9 @@ public class Telewarp extends JavaPlugin {
         warpsCommand = new WarpsCommand(this);
         getServer().getPluginCommand("warps").setExecutor(warpsCommand);
         getServer().getPluginCommand("homes").setExecutor(homesCommand);
-        Plugin gp = getServer().getPluginManager().getPlugin("GriefPrevention");
-        if (gp != null) {
-            griefPrevention = (GriefPreventionTNG)gp;
-        }
+
     }
 
-    public boolean isGriefPreventionSupportEnabled() {
-        return griefPrevention != null && getConfig().getBoolean("grief-prevention.enabled", true);
-    }
     private void loadSavedCooldowns() {
         ConfigAccessor accessor = new ConfigAccessor(this, "cooldowns.yml");
         accessor.getConfig();
@@ -343,9 +335,5 @@ public class Telewarp extends JavaPlugin {
 
     public HashMap<String, Long> getCooldowns() {
         return cooldowns;
-    }
-
-    public GriefPreventionTNG getGP() {
-        return ((GriefPreventionTNG) getServer().getPluginManager().getPlugin("GriefPreventionTNG"));
     }
 }

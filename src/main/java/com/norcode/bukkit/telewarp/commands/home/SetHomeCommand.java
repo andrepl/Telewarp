@@ -29,22 +29,6 @@ public class SetHomeCommand extends BaseCommand {
             return true;
         }
 
-        if (plugin.isGriefPreventionSupportEnabled()) {
-            com.norcode.bukkit.griefprevention.data.Claim claim = plugin.getGP().getDataStore().getClaimAt(bedBlock.getLocation(), false, null);
-            if (claim == null)   {
-                if (plugin.getConfig().getBoolean("grief-prevention.require-claim", true)) {
-                    sender.sendMessage("gp-claim-required");
-                    return true;
-                }
-            } else if (plugin.getConfig().getBoolean("grief-prevention.require-trust", true)) {
-                String err = claim.allowContainers(player);
-                if (err != null) {
-                    sender.sendMessage(err);
-                    return true;
-                }
-            }
-        }
-
         String homeName = null;
         if (args.size() == 0) {
             homeName = "home";

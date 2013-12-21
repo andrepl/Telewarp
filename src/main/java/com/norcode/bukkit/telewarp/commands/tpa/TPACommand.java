@@ -4,6 +4,10 @@ import com.norcode.bukkit.telewarp.MetaKeys;
 import com.norcode.bukkit.telewarp.TPARequest;
 import com.norcode.bukkit.telewarp.Telewarp;
 import com.norcode.bukkit.telewarp.commands.BaseCommand;
+import com.norcode.bukkit.telewarp.util.Util;
+import com.norcode.bukkit.telewarp.util.chat.ClickAction;
+import com.norcode.bukkit.telewarp.util.chat.Text;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -32,6 +36,18 @@ public class TPACommand extends BaseCommand {
         Player destination = matches.get(0);
         TPARequest req = new TPARequest(destination.getName(), player.getName(), player.getName());
         destination.sendMessage(plugin.getMsg("incoming-tpa-request", player.getName()));
+
+        Text text = new Text("").append("Or you can click the links below.");
+        Text accept_button = new Text("").append("【").setBold(true).setColor(ChatColor.BLUE).
+                append(" ACCEPT ").setColor(ChatColor.GREEN).setClick(ClickAction.RUN_COMMAND, "/tpayes")
+                .append("】").setBold(true).setColor(ChatColor.GREEN);
+        Text reject_button = new Text("").append("【").setBold(true).setColor(ChatColor.BLUE).
+                append(" REJECT ").setColor(ChatColor.RED).setClick(ClickAction.RUN_COMMAND, "/tpano")
+                .append("】").setBold(true).setColor(ChatColor.GREEN);
+
+        text = text.append(accept_button).append(reject_button);
+        Util.send(destination, text);
+
         plugin.setPlayerMeta(destination, MetaKeys.TPA_REQUEST, req);
         player.sendMessage(plugin.getMsg("tpa-request-sent", destination.getName()));
         return true;
