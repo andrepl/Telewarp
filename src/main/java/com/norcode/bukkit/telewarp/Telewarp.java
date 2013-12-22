@@ -52,9 +52,7 @@ public class Telewarp extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!enableVault()) {
-            getLogger().severe("Vault was not found, group-based warmup/cooldown times, and economy support will not be available.");
-        }
+        enableVault();
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -134,17 +132,26 @@ public class Telewarp extends JavaPlugin {
 
     }
 
-    private boolean enableVault() {
-        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+    private void enableVault() {
+
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			getLogger().warning("Vault not found.  Group warmup/cooldown timers and teleportation costs will not be available");
+			return;
+		}
+		RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 
         if (permissionProvider != null) {
             permission = permissionProvider.getProvider();
-        }
+        } else {
+			getLogger().warning("No Vault-compatible permissions plugin found. Group warmup/cooldown timers will not be available.");
+		}
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
-        }
-        return (permission != null && economy != null);
+        } else {
+			getLogger().warning("No Vault-compatible economy plugin found. teleportation costs will not be available.");
+		}
+
     }
 
     public BaseWarpManager getWarpManager() {
