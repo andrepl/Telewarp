@@ -37,7 +37,7 @@ public class TPACommand extends BaseCommand {
         TPARequest req = new TPARequest(destination.getName(), player.getName(), player.getName());
         destination.sendMessage(plugin.getMsg("incoming-tpa-request", player.getName()));
 
-        Text text = new Text("").append("Or you can click the links below.");
+        Text text = new Text("").append("These links will only work on your most recent request.");
         Text accept_button = new Text("").append("【").setBold(true).setColor(ChatColor.BLUE).
                 append(" ACCEPT ").setColor(ChatColor.GREEN).setClick(ClickAction.RUN_COMMAND, "/tpayes")
                 .append("】").setBold(true).setColor(ChatColor.GREEN);
