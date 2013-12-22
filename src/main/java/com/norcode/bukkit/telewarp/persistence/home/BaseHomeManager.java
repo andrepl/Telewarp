@@ -3,7 +3,6 @@ package com.norcode.bukkit.telewarp.persistence.home;
 import com.norcode.bukkit.telewarp.Telewarp;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,18 +14,25 @@ import java.util.Map;
  */
 public abstract class BaseHomeManager {
 
-    protected Telewarp plugin;
+	protected Telewarp plugin;
 
-    public BaseHomeManager(Telewarp plugin) {
-        this.plugin = plugin;
-    }
+	public BaseHomeManager(Telewarp plugin) {
+		this.plugin = plugin;
+	}
 
-    public abstract void reloadData();
-    public abstract void delHome(Home home);
-    public abstract void saveHome(Home home);
-    public abstract Home getHome(String player, String name);
-    public abstract Home createHome(String player, String name, String world, double x, double y, double z, float yaw, float pitch);
-    public abstract void saveAll();
-    public abstract Map<String, Home> getHomesFor(String player);
-    public abstract Collection<String> getPlayersWithHomes();
+	public abstract void reloadData();
+
+	public abstract void delHome(Home home);
+
+	public abstract void saveHome(Home home);
+
+	public abstract Home getHome(String player, String name);
+
+	public abstract Home createHome(String player, String name, String world, double x, double y, double z, float yaw, float pitch);
+
+	public abstract void saveAll();
+
+	public abstract Map<String, Home> getHomesFor(String player);
+
+	public abstract Collection<String> getPlayersWithHomes();
 }
