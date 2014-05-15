@@ -1,14 +1,17 @@
 package com.norcode.bukkit.telewarp.util.chat;
 
 
-import net.minecraft.server.v1_7_R1.ChatClickable;
-import net.minecraft.server.v1_7_R1.ChatComponentText;
-import net.minecraft.server.v1_7_R1.ChatHoverable;
-import net.minecraft.server.v1_7_R1.EnumChatFormat;
-import net.minecraft.server.v1_7_R1.IChatBaseComponent;
-import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import net.minecraft.server.v1_7_R3.ChatClickable;
+import net.minecraft.server.v1_7_R3.ChatComponentText;
+import net.minecraft.server.v1_7_R3.ChatHoverable;
+import net.minecraft.server.v1_7_R3.EnumChatFormat;
+import net.minecraft.server.v1_7_R3.IChatBaseComponent;
+import net.minecraft.server.v1_7_R3.NBTTagCompound;
+import net.minecraft.server.v1_7_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -30,14 +33,10 @@ public class Text extends ChatComponentText {
 	}
 
 	public Text appendItem(ItemStack stack) {
-		net.minecraft.server.v1_7_R1.ItemStack nms = CraftItemStack.asNMSCopy(stack);
+		net.minecraft.server.v1_7_R3.ItemStack nms = CraftItemStack.asNMSCopy(stack);
 		NBTTagCompound tag = new NBTTagCompound();
 		nms.save(tag);
 		return append(new Text(nms.getName()).setColor(ChatColor.getByChar(nms.w().e.getChar())).setHover(HoverAction.SHOW_ITEM, new ChatComponentText(tag.toString())));
-	}
-
-	public net.minecraft.server.v1_7_R1.ChatModifier getChatModifier() {
-		return b();
 	}
 
 	public Text setBold(boolean bold) {
@@ -71,7 +70,7 @@ public class Text extends ChatComponentText {
 	}
 
 	public Text setClick(ClickAction action, String value) {
-		getChatModifier().a(new ChatClickable(action.getNMS(), value));
+		this.getChatModifier().setChatClickable(new ChatClickable(action.getNMS(), value));
 		return this;
 	}
 
@@ -91,5 +90,10 @@ public class Text extends ChatComponentText {
 	@Override
 	public IChatBaseComponent f() {
 		return h();
+	}
+
+	public void send(Player player) {
+		PacketPlayOutChat packet = new PacketPlayOutChat(this, true);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 	}
 }
