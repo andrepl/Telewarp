@@ -8,14 +8,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-/**
- * Created with IntelliJ IDEA.
- * User: andre
- * Date: 6/2/13
- * Time: 1:24 PM
- * To change this template use File | Settings | File Templates.
- */
 public class TelewarpCommand extends BaseCommand {
 
 	public TelewarpCommand(Telewarp plugin) {
@@ -64,13 +56,13 @@ public class TelewarpCommand extends BaseCommand {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, LinkedList<String> args) {
 		List<String> results = new ArrayList<String>();
 		if (args.size() == 1) {
-			if (args.peek().toLowerCase().startsWith("reload")) {
+			if ("reload".startsWith(args.peek().toLowerCase())) {
 				results.add("reload");
 			}
-			if (args.peek().toLowerCase().startsWith("save")) {
+			if ("save".startsWith(args.peek().toLowerCase())) {
 				results.add("save");
 			}
-			if (args.peek().toLowerCase().startsWith("resetcooldown")) {
+			if ("resetcooldown".startsWith(args.peek().toLowerCase())) {
 				results.add("resetcooldown");
 			}
 		} else if (args.size() == 2) {
