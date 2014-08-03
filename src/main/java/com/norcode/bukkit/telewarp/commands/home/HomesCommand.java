@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class HomesCommand extends BaseCommand {
 	public HomesCommand(Telewarp plugin) {
@@ -23,7 +24,8 @@ public class HomesCommand extends BaseCommand {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, LinkedList<String> args) {
 		Player player = (Player) sender;
-		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(sender.getName());
+		UUID id = player.getUniqueId();
+		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(id);
 		// List Homes
 		if (homes.size() == 0) {
 			player.sendMessage(plugin.getMsg("no-home-location"));

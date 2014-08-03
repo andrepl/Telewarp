@@ -1,16 +1,19 @@
 package com.norcode.bukkit.telewarp.persistence.home;
 
+import org.bukkit.Bukkit;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.util.UUID;
 
 @Embeddable
 public class PlayerHomeName {
 	@Column(nullable = false)
-	private String owner;
+	private UUID owner;
 	@Column(nullable = false)
 	private String name;
 
-	public PlayerHomeName(String owner, String name) {
+	public PlayerHomeName(UUID owner, String name) {
 		super();
 		this.owner = owner;
 		this.name = name;
@@ -19,13 +22,15 @@ public class PlayerHomeName {
 	public PlayerHomeName() {
 	}
 
-	;
+	public String getOwnerName() {
+		return Bukkit.getServer().getOfflinePlayer(owner).getName();
+	}
 
-	public String getOwner() {
+	public UUID getOwnerId() {
 		return owner;
 	}
 
-	public void setOwner(String owner) {
+	public void setOwner(UUID owner) {
 		this.owner = owner;
 	}
 
@@ -50,15 +55,15 @@ public class PlayerHomeName {
 		} else {
 			namesEqual = getName().equals(other.getName());
 		}
-		if (getOwner() == null) {
-			ownersEqual = other.getOwner() == null;
+		if (getOwnerId() == null) {
+			ownersEqual = other.getOwnerId() == null;
 		} else {
-			ownersEqual = getOwner().equals(other.getName());
+			ownersEqual = getOwnerId().equals(other.getName());
 		}
 		return namesEqual && ownersEqual;
 	}
 
 	public int hashCode() {
-		return (this.owner + ":" + this.name).hashCode();
+		return (this.getOwnerName() + ":" + this.name).hashCode();
 	}
 }

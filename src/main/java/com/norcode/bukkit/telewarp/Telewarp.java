@@ -29,6 +29,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -44,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Telewarp extends JavaPlugin {
@@ -56,7 +58,7 @@ public class Telewarp extends JavaPlugin {
 	private SortedSet<Map.Entry<String, Integer>> multipleHomeLimits;
 	private SortedSet<Map.Entry<String, Integer>> groupCooldownLimits;
 
-	private HashMap<String, Long> cooldowns;
+	private HashMap<UUID, Long> cooldowns;
 
 	public HomesCommand homesCommand;
 	public WarpsCommand warpsCommand;
@@ -106,13 +108,20 @@ public class Telewarp extends JavaPlugin {
 	private void loadSavedCooldowns() {
 		ConfigAccessor accessor = new ConfigAccessor(this, "cooldowns.yml");
 		accessor.getConfig();
-		cooldowns = new HashMap<String, Long>();
+		cooldowns = new HashMap<UUID, Long>();
 		long now = System.currentTimeMillis();
 		for (String key : accessor.getConfig().getKeys(false)) {
+			UUID id;
+			if (key.length() != 36) {
+				// its a username, upgrade.
+				OfflinePlayer p = getServer().getOfflinePlayer(key);
+				id = p.getUniqueId();
+			} else {
+				id = UUID.fromString(key);
+			}
 			long expiry = accessor.getConfig().getLong(key);
 			if (expiry > now) {
-				cooldowns.put(key, expiry);
-
+				cooldowns.put(id, expiry);
 			}
 			accessor.getConfig().set(key, null);
 		}
@@ -245,10 +254,10 @@ public class Telewarp extends JavaPlugin {
 		ConfigAccessor accessor = new ConfigAccessor(this, "cooldowns.yml");
 
 		long now = System.currentTimeMillis();
-		for (String key : cooldowns.keySet()) {
+		for (UUID key : cooldowns.keySet()) {
 			long expiry = cooldowns.get(key);
 			if (expiry > now) {
-				accessor.getConfig().set(key, cooldowns.get(key));
+				accessor.getConfig().set(key.toString(), cooldowns.get(key));
 			}
 		}
 		accessor.saveConfig();
@@ -306,8 +315,8 @@ public class Telewarp extends JavaPlugin {
 		return loc;
 	}
 
-	public int getPlayerMaxHomes(String name) {
-		Player p = getServer().getPlayer(name);
+	public int getPlayerMaxHomes(UUID playerId) {
+		Player p = getServer().getPlayer(playerId);
 		for (Map.Entry<String, Integer> e : multipleHomeLimits) {
 			if (permission.playerInGroup(p, e.getKey())) {
 				return e.getValue();
@@ -350,7 +359,7 @@ public class Telewarp extends JavaPlugin {
 		return validNamePattern;
 	}
 
-	public HashMap<String, Long> getCooldowns() {
+	public HashMap<UUID, Long> getCooldowns() {
 		return cooldowns;
 	}
 }

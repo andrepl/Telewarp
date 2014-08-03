@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.util.UUID;
 
 @Entity
 @Table(name = "telewarp_home")
@@ -89,7 +90,12 @@ public class Home {
 
 	@Transient
 	public String getOwner() {
-		return getPlayerHomeName().getOwner();
+		return getPlayerHomeName().getOwnerName();
+	}
+
+	@Transient
+	public UUID getOwnerId() {
+		return getPlayerHomeName().getOwnerId();
 	}
 
 	@Transient

@@ -38,7 +38,7 @@ public class SetHomeCommand extends BaseCommand {
 			player.sendMessage(plugin.getMsg("invalid-name", homeName));
 			return true;
 		}
-		Home home = plugin.getHomeManager().getHome(player.getName(), homeName);
+		Home home = plugin.getHomeManager().getHome(player.getUniqueId(), homeName);
 		Location l = bedBlock.getLocation();
 		if (home != null) {
 			home.setWorld(l.getWorld().getName());
@@ -50,11 +50,11 @@ public class SetHomeCommand extends BaseCommand {
 		} else {
 			// check totals
 			Map<String, Home> playerHomes = plugin.getHomeManager().getHomesFor(player.getName());
-			if (playerHomes != null && playerHomes.size() > plugin.getPlayerMaxHomes(player.getName())) {
+			if (playerHomes != null && playerHomes.size() > plugin.getPlayerMaxHomes(player.getUniqueId())) {
 				sender.sendMessage(plugin.getMsg("too-many-homes"));
 				return true;
 			}
-			home = plugin.getHomeManager().createHome(player.getName(), homeName.toLowerCase(), l.getWorld().getName(), l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
+			home = plugin.getHomeManager().createHome(player.getUniqueId(), homeName.toLowerCase(), l.getWorld().getName(), l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
 		}
 		home.setPlugin(plugin);
 		plugin.getHomeManager().saveHome(home);

@@ -2,19 +2,17 @@ package com.norcode.bukkit.telewarp.persistence.home;
 
 import com.norcode.bukkit.telewarp.Telewarp;
 import com.norcode.bukkit.telewarp.util.ConfigAccessor;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-/**
- * Created with IntelliJ IDEA.
- * User: andre
- * Date: 6/5/13
- * Time: 11:15 AM
- * To change this template use File | Settings | File Templates.
- */
 public class YamlHomeManager extends BaseHomeManager {
 	ConfigAccessor accessor;
 
@@ -31,7 +29,7 @@ public class YamlHomeManager extends BaseHomeManager {
 
 	@Override
 	public void delHome(Home home) {
-		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(home.getOwner().toLowerCase());
+		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(home.getOwnerId().toString());
 		if (sec == null) {
 			return;
 		}
@@ -40,9 +38,9 @@ public class YamlHomeManager extends BaseHomeManager {
 
 	@Override
 	public void saveHome(Home home) {
-		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(home.getOwner().toLowerCase());
+		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(home.getOwnerId().toString());
 		if (sec == null) {
-			sec = accessor.getConfig().createSection(home.getOwner().toLowerCase());
+			sec = accessor.getConfig().createSection(home.getOwnerId().toString());
 		}
 		ConfigurationSection hs = sec.getConfigurationSection(home.getName().toLowerCase());
 		if (hs == null) {
@@ -58,13 +56,13 @@ public class YamlHomeManager extends BaseHomeManager {
 	}
 
 	@Override
-	public Home getHome(String player, String name) {
-		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(player.toLowerCase() + "." + name.toLowerCase());
+	public Home getHome(UUID playerId, String name) {
+		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(playerId.toString() + "." + name.toLowerCase());
 		if (sec == null) {
 			return null;
 		} else {
 			Home h = new Home();
-			h.setPlayerHomeName(new PlayerHomeName(player.toLowerCase(), name.toLowerCase()));
+			h.setPlayerHomeName(new PlayerHomeName(playerId, name.toLowerCase()));
 			h.setWorld(sec.getString("world"));
 			h.setX(sec.getDouble("x"));
 			h.setY(sec.getDouble("y"));
@@ -77,9 +75,9 @@ public class YamlHomeManager extends BaseHomeManager {
 	}
 
 	@Override
-	public Home createHome(String player, String name, String world, double x, double y, double z, float yaw, float pitch) {
+	public Home createHome(UUID playerId, String name, String world, double x, double y, double z, float yaw, float pitch) {
 		Home h = new Home();
-		h.setPlayerHomeName(new PlayerHomeName(player.toLowerCase(), name.toLowerCase()));
+		h.setPlayerHomeName(new PlayerHomeName(playerId, name.toLowerCase()));
 		h.setWorld(world);
 		h.setX(x);
 		h.setY(y);
@@ -97,16 +95,16 @@ public class YamlHomeManager extends BaseHomeManager {
 	}
 
 	@Override
-	public Map<String, Home> getHomesFor(String player) {
+	public Map<String, Home> getHomesFor(UUID playerId) {
 		HashMap<String, Home> results = new HashMap<String, Home>();
-		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(player.toLowerCase());
+		ConfigurationSection sec = accessor.getConfig().getConfigurationSection(playerId.toString());
 		if (sec != null) {
 			Home h;
 			ConfigurationSection sec2;
 			for (String key : sec.getKeys(false)) {
 				sec2 = sec.getConfigurationSection(key);
 				h = new Home();
-				h.setPlayerHomeName(new PlayerHomeName(player.toLowerCase(), sec2.getString("name").toLowerCase()));
+				h.setPlayerHomeName(new PlayerHomeName(playerId, sec2.getString("name").toLowerCase()));
 				h.setWorld(sec2.getString("world"));
 				h.setX(sec2.getDouble("x"));
 				h.setY(sec2.getDouble("y"));
@@ -121,7 +119,21 @@ public class YamlHomeManager extends BaseHomeManager {
 	}
 
 	@Override
-	public Collection<String> getPlayersWithHomes() {
-		return accessor.getConfig().getKeys(false);
+	public Collection<UUID> getPlayersWithHomes() {
+		List<UUID> pids = new ArrayList<UUID>();
+		for (String s: accessor.getConfig().getKeys(false)) {
+			pids.add(UUID.fromString(s));
+		}
+		return pids;
+	}
+
+	@Override
+	public Map<String, Home> getHomesFor(String name) {
+		for (OfflinePlayer p: Bukkit.getOfflinePlayers()) {
+			if (p.getName().equalsIgnoreCase(name)) {
+				return getHomesFor(p.getUniqueId());
+			}
+		}
+		return new HashMap<String, Home>();
 	}
 }

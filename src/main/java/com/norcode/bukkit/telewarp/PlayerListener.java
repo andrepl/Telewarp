@@ -149,7 +149,7 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		// Passing through a completed and sanctioned teleport.
 		if (player.hasMetadata(MetaKeys.ACTIVE_TELEPORT)) {
-			plugin.getCooldowns().put(player.getName(), System.currentTimeMillis() + plugin.getPlayerCooldown(player));
+			plugin.getCooldowns().put(player.getUniqueId(), System.currentTimeMillis() + plugin.getPlayerCooldown(player));
 			player.removeMetadata(MetaKeys.ACTIVE_TELEPORT, plugin);
 			plugin.debug("Setting /back location to " + plugin.serializeLocation(event.getFrom()));
 			player.setMetadata(MetaKeys.PREVIOUS_LOCATION, new FixedMetadataValue(plugin, plugin.serializeLocation(event.getFrom())));

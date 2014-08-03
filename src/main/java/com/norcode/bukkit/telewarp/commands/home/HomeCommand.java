@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class HomeCommand extends BaseCommand {
 	private BlockFace[] bedBlockCheckDirections = new BlockFace[]{BlockFace.NORTH, BlockFace.WEST, BlockFace.EAST,
@@ -139,7 +140,11 @@ public class HomeCommand extends BaseCommand {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, LinkedList<String> args) {
 		List<String> results = new LinkedList<String>();
-		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(sender.getName());
+		if (!(sender instanceof Player)) {
+			return null;
+		}
+		UUID playerId = ((Player) sender).getUniqueId();
+		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(playerId);
 		if (sender.hasPermission("telewarp.commands.home.others")) {
 			if (args.peek().contains(":")) {
 				String[] parts = args.pop().split(":");

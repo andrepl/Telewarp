@@ -5,19 +5,14 @@ import com.norcode.bukkit.telewarp.commands.BaseCommand;
 import com.norcode.bukkit.telewarp.persistence.home.Home;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-/**
- * Created with IntelliJ IDEA.
- * User: andre
- * Date: 6/5/13
- * Time: 4:31 PM
- * To change this template use File | Settings | File Templates.
- */
 public class DelHomeCommand extends BaseCommand {
 	public DelHomeCommand(Telewarp plugin) {
 		super(plugin, null);
@@ -26,7 +21,13 @@ public class DelHomeCommand extends BaseCommand {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, LinkedList<String> args) {
 		Home targetHome = null;
-		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(sender.getName());
+
+		if (!(sender instanceof Player)) {
+			sender.sendMessage("This commmand can only be used by players.");
+			return true;
+		}
+		UUID id = ((Player) sender).getUniqueId();
+		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(id);
 		if (homes == null || homes.isEmpty()) {
 			sender.sendMessage(plugin.getMsg("no-home-location"));
 			return true;
@@ -54,8 +55,12 @@ public class DelHomeCommand extends BaseCommand {
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, LinkedList<String> args) {
-		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(sender.getName());
 		List<String> results = new LinkedList<String>();
+		if (!(sender instanceof Player)) {
+			return results;
+		}
+		UUID id = ((Player) sender).getUniqueId();
+		Map<String, Home> homes = plugin.getHomeManager().getHomesFor(id);
 		for (Home h : homes.values()) {
 			if (h.getName().toLowerCase().startsWith(args.peekLast().toLowerCase())) {
 				results.add(h.getName());

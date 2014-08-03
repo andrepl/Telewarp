@@ -1,6 +1,7 @@
 package com.norcode.bukkit.telewarp.commands;
 
 import com.norcode.bukkit.telewarp.Telewarp;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -8,6 +9,8 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
+
 public class TelewarpCommand extends BaseCommand {
 
 	public TelewarpCommand(Telewarp plugin) {
@@ -67,9 +70,10 @@ public class TelewarpCommand extends BaseCommand {
 			}
 		} else if (args.size() == 2) {
 			if (args.peekFirst().equalsIgnoreCase("resetcooldown")) {
-				for (String key : plugin.getCooldowns().keySet()) {
-					if (key.toLowerCase().startsWith(args.peekLast().toLowerCase())) {
-						results.add(key);
+				for (UUID key : plugin.getCooldowns().keySet()) {
+					OfflinePlayer op = plugin.getServer().getOfflinePlayer(key);
+					if (op.getName().toLowerCase().startsWith(args.peekLast().toLowerCase())) {
+						results.add(op.getName());
 					}
 				}
 			}
