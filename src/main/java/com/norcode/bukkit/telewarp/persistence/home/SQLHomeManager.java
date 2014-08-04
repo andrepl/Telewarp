@@ -67,6 +67,7 @@ public class SQLHomeManager extends BaseHomeManager {
 	@Override
 	public Home createHome(UUID playerId, String name, String world, double x, double y, double z, float yaw, float pitch) {
 		Home home = plugin.getDatabase().createEntityBean(Home.class);
+
 		home.setPlayerHomeName(new PlayerHomeName(playerId, name));
 		home.setWorld(world);
 		home.setX(x);

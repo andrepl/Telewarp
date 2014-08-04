@@ -26,7 +26,7 @@ public class PlayerHomeName {
 		return Bukkit.getServer().getOfflinePlayer(owner).getName();
 	}
 
-	public UUID getOwnerId() {
+	public UUID getOwner() {
 		return owner;
 	}
 
@@ -55,10 +55,10 @@ public class PlayerHomeName {
 		} else {
 			namesEqual = getName().equals(other.getName());
 		}
-		if (getOwnerId() == null) {
-			ownersEqual = other.getOwnerId() == null;
+		if (getOwner() == null) {
+			ownersEqual = other.getOwner() == null;
 		} else {
-			ownersEqual = getOwnerId().equals(other.getName());
+			ownersEqual = getOwner().equals(other.getName());
 		}
 		return namesEqual && ownersEqual;
 	}

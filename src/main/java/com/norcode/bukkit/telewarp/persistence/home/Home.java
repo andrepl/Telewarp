@@ -95,7 +95,7 @@ public class Home {
 
 	@Transient
 	public UUID getOwnerId() {
-		return getPlayerHomeName().getOwnerId();
+		return getPlayerHomeName().getOwner();
 	}
 
 	@Transient
